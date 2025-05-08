@@ -22,8 +22,8 @@ ui <- fluidPage(
 # Server: Lógica del servidor
 server <- function(input, output) {
   
-  output_list_database <- MASTER_module_import_server(id = "MASTER_import")
- 
+  output_list_database <- MASTER_module_import_server(id = "MASTER_import", show_dev = TRUE)
+  
 }
 
 # Ejecutar la aplicación

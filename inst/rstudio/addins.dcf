@@ -1,4 +1,4 @@
 Name: Rscience.import
-Description: Inicia una aplicación Shiny simple para explorar el conjunto de datos mtcars
+Description: Import files
 Binding: run_app
 Interactive: true
