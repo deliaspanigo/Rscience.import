@@ -73,7 +73,7 @@ module_import_Rscience_server <- function(id, sui_data_source){
       output$iu_base_selector <- renderUI({
         req(check_ok())
         
-        vector_visual <- c("Seleccione una..." = "", select_opt_database())
+        vector_visual <- c("Selecet one..." = "", select_opt_database())
         
         
         shiny::selectInput(
@@ -100,7 +100,7 @@ module_import_Rscience_server <- function(id, sui_data_source){
           style = "margin-top: 15px;",
           actionButton(
             inputId = ns("confirm_selection"),
-            label = "Confirmar selección",
+            label = "Checking selection",
             icon = icon("check"),
             class = btn_class,
             width = "100%",
@@ -110,7 +110,7 @@ module_import_Rscience_server <- function(id, sui_data_source){
           if (is_disabled) {
             div(
               style = "margin-top: 10px; color: #e57373; font-style: italic; font-size: 16px; font-weight: bold",
-              "Selecciona un ejemplo de RMedic"
+              "Select a dataset example from Rscience."
             )
           },
           # Mostrar mensaje de confirmación solo si el estado es confirmed
@@ -118,7 +118,7 @@ module_import_Rscience_server <- function(id, sui_data_source){
             div(
               style = "margin-top: 10px; color: green;",
               icon("check-circle"), 
-              "Selección confirmada"
+              "Confirmed Rscience dataset example!"
             )
           }
         )
@@ -170,7 +170,7 @@ module_import_Rscience_server <- function(id, sui_data_source){
         
         # Mostrar un mensaje de éxito
         showNotification(
-          "Selección confirmada correctamente",
+          "Confirmed Rscience data example!",
           type = "message"
         )
       })

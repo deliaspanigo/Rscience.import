@@ -75,7 +75,7 @@ module_import_Rdata_server <- function(id, sui_data_source) {
           if (is_disabled) {
             div(
               style = "margin-top: 10px; color: #e57373; font-style: italic; font-size: 16px; font-weight: bold",
-              "Select one dataset from R."
+              "Select one dataset example from R."
             )
           },
           # Mostrar mensaje de confirmación solo si el estado es confirmed
@@ -83,7 +83,7 @@ module_import_Rdata_server <- function(id, sui_data_source) {
             div(
               style = "margin-top: 10px; color: green;",
               icon("check-circle"), 
-              "Confirmed selection!"
+              "Confirmed R dataset example!"
             )
           }
         )
@@ -139,7 +139,7 @@ module_import_Rdata_server <- function(id, sui_data_source) {
         
         # Mostrar un mensaje de éxito
         showNotification(
-          "Confirmed selection!",
+          "Confirmed R dataset example!",
           type = "message"
         )
       })
