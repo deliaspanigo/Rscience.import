@@ -118,7 +118,7 @@ module_import_Rscience_server <- function(id, sui_data_source){
             div(
               style = "margin-top: 10px; color: green;",
               icon("check-circle"), 
-              "Confirmed Rscience dataset example!"
+              "Confirmed - Rscience dataset example selected!"
             )
           }
         )

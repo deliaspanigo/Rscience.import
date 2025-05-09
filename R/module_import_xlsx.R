@@ -36,7 +36,7 @@ module_import_xlsx_server <- function(id, sui_data_source){
       output$iu_base_selector <- renderUI({
         req(check_ok())
         div(
-          fileInput(ns("selected_input_file"), "Elige un archivo xlsx (Solo primer hoja)",
+          fileInput(ns("selected_input_file"), "Choose xlsx files (First sheet only)",
                     accept = c(
                       ".xlsx")
           )
@@ -61,7 +61,7 @@ module_import_xlsx_server <- function(id, sui_data_source){
           style = "margin-top: 15px;",
           actionButton(
             inputId = ns("confirm_selection"),
-            label = "Confirmar selección",
+            label = "Checking selection",
             icon = icon("check"),
             class = btn_class,
             width = "100%",
@@ -71,7 +71,7 @@ module_import_xlsx_server <- function(id, sui_data_source){
           if (is_disabled) {
             div(
               style = "margin-top: 10px; color: #e57373; font-style: italic; font-size: 16px; font-weight: bold",
-              "Selecciona un archivo Excel"
+              "Select an xlsx file."
             )
           },
           # Mostrar mensaje de confirmación solo si el estado es confirmed
@@ -79,7 +79,7 @@ module_import_xlsx_server <- function(id, sui_data_source){
             div(
               style = "margin-top: 10px; color: green;",
               icon("check-circle"), 
-              "Selección confirmada"
+              "Confirmed - xlsx file selected!"
             )
           },
           
@@ -118,29 +118,29 @@ module_import_xlsx_server <- function(id, sui_data_source){
         # Verificar tamaño del archivo (en MB)
         if (excel_details$file_size_mb > 50) {
           validation_errors <- c(validation_errors, 
-                                 paste("El archivo pesa", excel_details$file_size_mb, 
-                                       "MB, excediendo el límite de 50 MB"))
+                                 paste("The file size is", excel_details$file_size_mb, 
+                                       "MB, exceding the limit of 50 MB"))
         }
         
         # Verificar número de hojas
         if (excel_details$sheet_count > 1) {
           validation_errors <- c(validation_errors, 
-                                 paste("El archivo contiene", excel_details$sheet_count, 
-                                       "hojas. Solo se permiten archivos xlsx con 1 hoja."))
+                                 paste("The file contains", excel_details$sheet_count, 
+                                       "sheets. Only xlsx files with 1 sheet are allowed."))
         }
         
         # Verificar número de columnas (primera hoja)
         if (excel_details$vector_cols[1] > 200) {
           validation_errors <- c(validation_errors, 
-                                 paste("La hoja del archivo xlsx contiene", excel_details$vector_cols[1], 
-                                       "columnas, excediendo el límite de 200 columnas."))
+                                 paste("The sheet from xlsx file contains", excel_details$vector_cols[1], 
+                                       "columns, exceding the limit of 200 columns."))
         }
         
         # Verificar número de filas (primera hoja)
         if (excel_details$vector_rows[1] > 5000) {
           validation_errors <- c(validation_errors, 
-                                 paste("La hoja del archivo xlsx contiene", excel_details$vector_rows[1], 
-                                       "filas, excediendo el límite de 5000 filas."))
+                                 paste("The sheet from xlsx file contains", excel_details$vector_rows[1], 
+                                       "rows, exceding the limit of 5000 rows."))
         }
         
         # Si hay errores de validación, retornar la lista de errores
@@ -204,7 +204,7 @@ module_import_xlsx_server <- function(id, sui_data_source){
           button_state("error")
           
           # Crear y mostrar mensaje de error
-          error_msg <- paste("No se pudo importar el archivo Excel debido a las siguientes limitaciones:", 
+          error_msg <- paste("The Excel file could not be imported due to the following limitations:", 
                              paste(validation_errors, collapse = "<br>"), 
                              sep = "<br>")
           
@@ -213,7 +213,7 @@ module_import_xlsx_server <- function(id, sui_data_source){
           # Mostrar pop-up con el error
           showModal(
             modalDialog(
-              title = "Error de validación",
+              title = "Error on validation",
               HTML(error_msg),
               easyClose = TRUE,
               footer = modalButton("Cerrar"),
@@ -240,7 +240,7 @@ module_import_xlsx_server <- function(id, sui_data_source){
         
         # Mostrar un mensaje de éxito
         showNotification(
-          "Selección confirmada correctamente",
+          "Confirmed - xlsx file selected!",
           type = "message"
         )
       })
