@@ -8,7 +8,7 @@ MASTER_module_import_ui <- function(id) {
       full_screen = TRUE,
       card_header(
         class = "d-flex align-items-center",
-        style = "background-color: #ff9a3c; color: white; border-bottom: 1px solid #e67e22;",
+        style = "background-color: #ff9a3c; color: white; border-bottom: 1px solid #e67e22; padding-left: 10px;",
         tags$i(class = "fa fa-database me-2"),
         tags$b("Data Import")
       ),
@@ -39,6 +39,7 @@ MASTER_module_import_ui <- function(id) {
                    div(
                      class = "mb-3 pt-2",
                      style = "border-top: 1px solid #ffe0b2;",
+                     br(),
                      module_import_02_settings_ui(id = ns("act001_s99_02"))
                    ),
                    
