@@ -59,7 +59,7 @@ module_import_csv_server <- function(id, sui_data_source){
         req(check_ok())
         
         div(
-          fileInput(ns("selected_input_file"), "Elige un archivo CSV",
+          fileInput(ns("selected_input_file"), "Select your CSV file",
                     accept = c(
                       "text/csv",
                       "text/comma-separated-values,text/plain",
@@ -67,8 +67,8 @@ module_import_csv_server <- function(id, sui_data_source){
           ),
           uiOutput(ns("ui_action_button")),  # Botón de acción siempre visible
           tags$hr(),
-          radioButtons(ns("header"), "Encabezado", choices = c(Yes = 1, No = 0)), br(),
-          radioButtons(ns("sep"), "Separador",
+          radioButtons(ns("header"), "Header", choices = c(Yes = 1, No = 0)), br(),
+          radioButtons(ns("sep"), "Separator",
                        choices = c(PuntoYComa = ";",
                                    Coma = ",",
                                    Tab = "\t"),
@@ -78,7 +78,7 @@ module_import_csv_server <- function(id, sui_data_source){
                                    Comma = ","),
                        selected = "."), br(),
           
-          radioButtons(ns("quote"), "Comillas",
+          radioButtons(ns("quote"), "Quotes",
                        choices = c(Ninguna = "",
                                    Doble = '"',
                                    Simple = "'"),
@@ -103,7 +103,7 @@ module_import_csv_server <- function(id, sui_data_source){
           style = "margin-top: 15px;",
           actionButton(
             inputId = ns("confirm_selection"),
-            label = "Confirmar selección",
+            label = "Checking selection",
             icon = icon("check"),
             class = btn_class,
             width = "100%",
@@ -121,7 +121,7 @@ module_import_csv_server <- function(id, sui_data_source){
             div(
               style = "margin-top: 10px; color: green;",
               icon("check-circle"), 
-              "Selección confirmada"
+              "Confirmed - CSV file selected!"
             )
           }
         )
@@ -198,7 +198,7 @@ module_import_csv_server <- function(id, sui_data_source){
         
         # Mostrar un mensaje de éxito
         showNotification(
-          "Selección confirmada correctamente",
+          "Confirmed - CSV file selected!",
           type = "message"
         )
       })
