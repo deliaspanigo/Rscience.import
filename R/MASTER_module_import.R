@@ -26,7 +26,7 @@ MASTER_module_import_ui <- function(id) {
                      class = "mb-3",
                      style = "color: #e67e22;",
                      tags$i(class = "fa fa-cog me-2"),
-                     "Configuración"
+                     "Import menu"
                    ),
                    
                    # Sección de fuente de datos
@@ -61,7 +61,7 @@ MASTER_module_import_ui <- function(id) {
                      class = "mb-3",
                      style = "color: #e67e22;",
                      tags$i(class = "fa fa-table me-2"),
-                     "Vista previa"
+                     "Preview"
                    ),
                    
                    # Contenedor para la tabla con bordes y esquinas redondeadas
@@ -70,7 +70,7 @@ MASTER_module_import_ui <- function(id) {
                      # style = "overflow-x: auto; background-color: white;",
                      h5(
                        class = "m-3",
-                       tags$b("Primeras filas del conjunto de datos:")
+                       tags$b("First 5 rows from dataset:")
                      ),
                      div(
                        class = "border rounded", 
@@ -88,7 +88,7 @@ MASTER_module_import_ui <- function(id) {
           )
         )
       )
-    )
+    ), br(), br(), br(), br(), br(), br(), br()
   )
   
   
@@ -109,15 +109,18 @@ MASTER_module_import_server <- function(id, sui_data_source, show_dev = FALSE){
       
       output$box01_data_source <- renderUI({
         
+        vector_choices <- c("01 - xlsx files"       = "source_xlsx",
+                            "02 - csv files"        = "source_csv",
+                            "03 - Rscience examples"  = "source_Rscience",
+                            "04 - R examples"       = "source_Rdata")
         
+        vector_choices <- c("Select one..." = "", vector_choices)
+        selected_pos <- length(vector_choices) #1
         shiny::selectInput(
           inputId = ns("sui_data_source"),
           label = "Data source:",
-          choices = c("01 - xlsx files"       = "source_xlsx",
-                      "02 - csv files"        = "source_csv",
-                      "03 - Rscience examples"  = "source_Rscience",
-                      "04 - R examples"       = "source_Rdata"),
-          selected = "source_Rdata"
+          choices = vector_choices,
+          selected = vector_choices[selected_pos]
           
         )
         
@@ -189,7 +192,7 @@ MASTER_module_import_server <- function(id, sui_data_source, show_dev = FALSE){
             class = "mb-3 pb-2",
             style = "border-bottom: 2px solid #0d6efd; color: #0d6efd;",
             icon("info-circle"), 
-            "Resumen de configuración"
+            "Data Selection"
           ),
           
           fluidRow(
@@ -198,20 +201,23 @@ MASTER_module_import_server <- function(id, sui_data_source, show_dev = FALSE){
                      class = "mb-3 p-2 rounded",
                      style = "background-color: rgba(13, 110, 253, 0.05); border-left: 4px solid #0d6efd;",
                      
-                     h5(class = "text-primary", icon("database", style = "padding-left: 10px;", class = "me-2"), "Información de datos"),
+                     h5(class = "text-primary", 
+                        icon("database", 
+                             style = "padding-left: 10px;", 
+                             class = "me-2"), "Data details"),
                      
                      div(class = "d-flex flex-wrap",
                          div(class = "me-4 mb-2",
-                             tags$b(style = "padding-left: 10px;", "Fuente: "),
+                             tags$b(style = "padding-left: 10px;", "Source: "),
                              span(data_source, style = "font-family: monospace;")),
                          
                          div(class = "me-4 mb-2",
-                             tags$b(style = "padding-left: 10px;", "Archivo: "),
+                             tags$b(style = "padding-left: 10px;", "File: "),
                              span(original_file_name, style = "font-family: monospace;")),
                          
                          div(class = "me-4 mb-2",
-                             tags$b(style = "padding-left: 10px;", "Dimensiones: "),
-                             span(paste0(value_nrow, " filas × ", value_ncol, " columnas"), 
+                             tags$b(style = "padding-left: 10px;", "Dimensions: "),
+                             span(paste0(value_nrow, " rows × ", value_ncol, " columns"), 
                                   style = "font-family: monospace;"))
                      )
                    )

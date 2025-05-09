@@ -37,7 +37,7 @@ module_import_Rdata_server <- function(id, sui_data_source) {
                         "02 - iris"       = "iris",
                         "03 - airquality" = "airquality")
         
-        vector_opt <- c("Seleccione una..." = "", vector_opt)
+        vector_opt <- c("Select one..." = "", vector_opt)
         
         shiny::selectInput(
           inputId = ns("selected_input_file"),
@@ -65,7 +65,7 @@ module_import_Rdata_server <- function(id, sui_data_source) {
           style = "margin-top: 15px;",
           actionButton(
             inputId = ns("confirm_selection"),
-            label = "Confirmar selección",
+            label = "Checking selection",
             icon = icon("check"),
             class = btn_class,
             width = "100%",
@@ -75,7 +75,7 @@ module_import_Rdata_server <- function(id, sui_data_source) {
           if (is_disabled) {
             div(
               style = "margin-top: 10px; color: #e57373; font-style: italic; font-size: 16px; font-weight: bold",
-              "Selecciona una base de datos de R"
+              "Select one dataset from R."
             )
           },
           # Mostrar mensaje de confirmación solo si el estado es confirmed
@@ -83,7 +83,7 @@ module_import_Rdata_server <- function(id, sui_data_source) {
             div(
               style = "margin-top: 10px; color: green;",
               icon("check-circle"), 
-              "Selección confirmada"
+              "Confirmed selection!"
             )
           }
         )
@@ -139,7 +139,7 @@ module_import_Rdata_server <- function(id, sui_data_source) {
         
         # Mostrar un mensaje de éxito
         showNotification(
-          "Selección confirmada correctamente",
+          "Confirmed selection!",
           type = "message"
         )
       })
