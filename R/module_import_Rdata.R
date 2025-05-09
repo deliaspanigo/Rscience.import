@@ -41,7 +41,7 @@ module_import_Rdata_server <- function(id, sui_data_source) {
         
         shiny::selectInput(
           inputId = ns("selected_input_file"),
-          label = "Bases de R",
+          label = "R - Dataset examples",
           choices = vector_opt
         )
       })

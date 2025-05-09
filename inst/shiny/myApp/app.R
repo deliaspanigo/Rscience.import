@@ -22,7 +22,7 @@ ui <- fluidPage(
 # Server: Lógica del servidor
 server <- function(input, output) {
   
-  output_list_database <- MASTER_module_import_server(id = "MASTER_import", show_dev = TRUE)
+  output_list_database <- MASTER_module_import_server(id = "MASTER_import", show_dev = FALSE)
   
 }
 

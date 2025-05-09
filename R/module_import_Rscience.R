@@ -78,7 +78,7 @@ module_import_Rscience_server <- function(id, sui_data_source){
         
         shiny::selectInput(
           inputId = ns("selected_input_file"),
-          label = "RMedic Examples",
+          label = "Rscience - Dataset examples",
           choices = vector_visual
         )
       })

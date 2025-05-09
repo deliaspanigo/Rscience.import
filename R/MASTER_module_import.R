@@ -1,15 +1,99 @@
 #' @export
-MASTER_module_import_ui <- function(id){
+MASTER_module_import_ui <- function(id) {
   ns <- shiny::NS(id)
   
   div(
-    #module_import_01_options_ui(id = ns("act001_s99_01")),
-    uiOutput(ns("box01_data_source")),
-    module_import_02_settings_ui(id = ns("act001_s99_02")),
-    module_import_03_show_ui(id = ns("act001_s99_03")), 
-    uiOutput(ns("show_dev"))
+    # Un solo card grande con las dos columnas dentro
+    card(
+      full_screen = TRUE,
+      card_header(
+        class = "d-flex align-items-center",
+        style = "background-color: #ff9a3c; color: white; border-bottom: 1px solid #e67e22;",
+        tags$i(class = "fa fa-database me-2"),
+        tags$b("Data Import")
+      ),
+      card_body(
+        style = "padding: 15px; background-color: #fff3e6;",
+        
+        # Estructura de columnas dentro del card
+        fluidRow(
+          # Columna izquierda - Controles y configuración
+          column(3, 
+                 div(
+                   style = "padding: 10px; border-right: 1px solid #ffe0b2;",
+                   # Título de la sección
+                   h4(
+                     class = "mb-3",
+                     style = "color: #e67e22;",
+                     tags$i(class = "fa fa-cog me-2"),
+                     "Configuración"
+                   ),
+                   
+                   # Sección de fuente de datos
+                   div(
+                     class = "mb-3",
+                     uiOutput(ns("box01_data_source"))
+                   ),
+                   
+                   # Sección de configuración con separador visual
+                   div(
+                     class = "mb-3 pt-2",
+                     style = "border-top: 1px solid #ffe0b2;",
+                     module_import_02_settings_ui(id = ns("act001_s99_02"))
+                   ),
+                   
+                   # Sección de visualización con separador visual
+                   div(
+                     class = "pt-2",
+                     style = "border-top: 1px solid #ffe0b2;",
+                     module_import_03_show_ui(id = ns("act001_s99_03"))
+                   )
+                 )
+          ),
+          
+          # Columna derecha - Vista previa de datos
+          column(9, 
+                 div(
+                   style = "padding: 10px;",
+                   # Título de la sección
+                   h4(
+                     class = "mb-3",
+                     style = "color: #e67e22;",
+                     tags$i(class = "fa fa-table me-2"),
+                     "Vista previa"
+                   ),
+                   
+                   # Contenedor para la tabla con bordes y esquinas redondeadas
+                   div(
+                     # class = "border rounded mb-4",
+                     # style = "overflow-x: auto; background-color: white;",
+                     h5(
+                       class = "m-3",
+                       tags$b("Primeras filas del conjunto de datos:")
+                     ),
+                     div(
+                       class = "border rounded", 
+                       style = "overflow-x: auto; max-width: 100%; background-color: white;",
+                       tableOutput(ns("data_table"))
+                     )
+                   ),
+                   
+                   # Información adicional
+                   div(
+                     class = "mt-3",
+                     uiOutput(ns("info_text2"))
+                   )
+                 )
+          )
+        )
+      )
+    )
   )
+  
+  
 }
+
+
 
 
 #' @export
@@ -27,10 +111,10 @@ MASTER_module_import_server <- function(id, sui_data_source, show_dev = FALSE){
         
         shiny::selectInput(
           inputId = ns("sui_data_source"),
-          label = "Qué fuente de datos prefieres?",
+          label = "Data source:",
           choices = c("01 - xlsx files"       = "source_xlsx",
                       "02 - csv files"        = "source_csv",
-                      "03 - RMedic examples"  = "source_Rscience",
+                      "03 - Rscience examples"  = "source_Rscience",
                       "04 - R examples"       = "source_Rdata"),
           selected = "source_Rdata"
           
@@ -60,10 +144,6 @@ MASTER_module_import_server <- function(id, sui_data_source, show_dev = FALSE){
         req(show_dev)
         div(
           br(),
-          # Tabla de datos
-          h4("Primeras filas del conjunto de datos:"),
-          tableOutput(ns("data_table")),
-          br(),
           h4("Parametros del usuario"),
           verbatimTextOutput(ns("my_parameters"))
         )
@@ -72,7 +152,7 @@ MASTER_module_import_server <- function(id, sui_data_source, show_dev = FALSE){
         
       # Mostrar las primeras filas de la tabla
       output$data_table <- renderTable({
-        req(show_dev, output_list_database())
+        req(output_list_database())
         df_safe <- tryCatch(output_list_database()$"database", error = function(e) NULL)
         head(df_safe, 5)
       })
@@ -83,6 +163,64 @@ MASTER_module_import_server <- function(id, sui_data_source, show_dev = FALSE){
         if (is.null(list_safe)) return("Sin datos.")
         str(list_safe)
       })
+      
+      
+      output$info_text2 <- renderUI({
+        
+        req(output_list_database())
+        req(output_list_database()$"database")
+        
+        list_safe <- tryCatch(output_list_database(), error = function(e) NULL)
+        if (is.null(list_safe)) return("Sin datos.")
+        
+        data_source <- list_safe$data_source
+        original_file_name <- list_safe$"original_file_name"
+        value_ncol <- ncol(list_safe$"database")
+        value_nrow <- nrow(list_safe$"database")
+        
+        # Contenedor principal
+        div(
+          class = "p-3 rounded shadow-sm",
+          style = "background: linear-gradient(to right, #f8f9fa, #ffffff);",
+          
+          # Título principal
+          h4(
+            class = "mb-3 pb-2",
+            style = "border-bottom: 2px solid #0d6efd; color: #0d6efd;",
+            icon("info-circle"), 
+            "Resumen de configuración"
+          ),
+          
+          fluidRow(
+            column(4,       # Sección de datos
+                   div(
+                     class = "mb-3 p-2 rounded",
+                     style = "background-color: rgba(13, 110, 253, 0.05); border-left: 4px solid #0d6efd;",
+                     
+                     h5(class = "text-primary", icon("database", class = "me-2"), "Información de datos"),
+                     
+                     div(class = "d-flex flex-wrap",
+                         div(class = "me-4 mb-2",
+                             span(class = "fw-bold", "Fuente: "),
+                             span(data_source, style = "font-family: monospace;")),
+                         
+                         div(class = "me-4 mb-2",
+                             span(class = "fw-bold", "Archivo: "),
+                             span(original_file_name, style = "font-family: monospace;")),
+                         
+                         div(class = "me-4 mb-2",
+                             span(class = "fw-bold", "Dimensiones: "),
+                             span(paste0(value_nrow, " filas × ", value_ncol, " columnas"), 
+                                  style = "font-family: monospace;"))
+                     )
+                   )
+            )
+            
+                     )
+                   )
+         
+      })
+      
       
       # Devolver solo los datos confirmados
       return(reactive(output_list_database()))
