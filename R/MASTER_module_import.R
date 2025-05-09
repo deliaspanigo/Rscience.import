@@ -192,28 +192,31 @@ MASTER_module_import_server <- function(id, sui_data_source, show_dev = FALSE){
           ),
           
           fluidRow(
-            column(4,       # Sección de datos
+            column(6,       # Sección de datos
                    div(
                      class = "mb-3 p-2 rounded",
                      style = "background-color: rgba(13, 110, 253, 0.05); border-left: 4px solid #0d6efd;",
                      
-                     h5(class = "text-primary", icon("database", class = "me-2"), "Información de datos"),
+                     h5(class = "text-primary", icon("database", style = "padding-left: 10px;", class = "me-2"), "Información de datos"),
                      
                      div(class = "d-flex flex-wrap",
                          div(class = "me-4 mb-2",
-                             span(class = "fw-bold", "Fuente: "),
+                             tags$b(style = "padding-left: 10px;", "Fuente: "),
                              span(data_source, style = "font-family: monospace;")),
                          
                          div(class = "me-4 mb-2",
-                             span(class = "fw-bold", "Archivo: "),
+                             tags$b(style = "padding-left: 10px;", "Archivo: "),
                              span(original_file_name, style = "font-family: monospace;")),
                          
                          div(class = "me-4 mb-2",
-                             span(class = "fw-bold", "Dimensiones: "),
+                             tags$b(style = "padding-left: 10px;", "Dimensiones: "),
                              span(paste0(value_nrow, " filas × ", value_ncol, " columnas"), 
                                   style = "font-family: monospace;"))
                      )
                    )
+                   
+                   
+                   
             )
             
                      )
