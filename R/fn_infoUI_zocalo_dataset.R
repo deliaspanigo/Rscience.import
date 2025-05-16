@@ -22,8 +22,6 @@ fn_infoUI_zocalo_dataset <- function(data_obj) {
       "Data Selection"
     ),
     
-    fluidRow(
-      column(6,       # Sección de datos
              div(
                class = "mb-3 p-2 rounded",
                style = "background-color: rgba(13, 110, 253, 0.05); border-left: 4px solid #0d6efd;",
@@ -48,7 +46,6 @@ fn_infoUI_zocalo_dataset <- function(data_obj) {
                             style = "font-family: monospace;"))
                )
              )
-      )
-    )
+
   )
 }
