@@ -2,6 +2,7 @@
 MASTER_module_import_ui <- function(id) {
   ns <- shiny::NS(id)
   
+
   div(
     # Un solo card grande con las dos columnas dentro
     card(
@@ -82,7 +83,7 @@ MASTER_module_import_ui <- function(id) {
                    # Información adicional
                    div(
                      class = "mt-3",
-                     uiOutput(ns("info_text2"))
+                     uiOutput(ns("info_zocalo_dataset"))
                    )
                  )
           )
@@ -107,12 +108,13 @@ MASTER_module_import_server <- function(id, sui_data_source, show_dev = FALSE){
       # ns para el server!
       ns <- session$ns
       
+      
       output$box01_data_source <- renderUI({
         
-        vector_choices <- c("01 - xlsx files"       = "source_xlsx",
-                            "02 - csv files"        = "source_csv",
+        vector_choices <- c("01 - xlsx files"         = "source_xlsx",
+                            "02 - csv files"          = "source_csv",
                             "03 - Rscience examples"  = "source_Rscience",
-                            "04 - R examples"       = "source_Rdata")
+                            "04 - R examples"         = "source_Rdata")
         
         vector_choices <- c("Select one..." = "", vector_choices)
         selected_pos <- length(vector_choices) #1
@@ -169,67 +171,10 @@ MASTER_module_import_server <- function(id, sui_data_source, show_dev = FALSE){
       })
       
       
-      output$info_text2 <- renderUI({
-        
-        req(output_list_database())
-        req(output_list_database()$"database")
-        
-        list_safe <- tryCatch(output_list_database(), error = function(e) NULL)
-        if (is.null(list_safe)) return("Sin datos.")
-        
-        data_source <- list_safe$data_source
-        original_file_name <- list_safe$"original_file_name"
-        value_ncol <- ncol(list_safe$"database")
-        value_nrow <- nrow(list_safe$"database")
-        
-        # Contenedor principal
-        div(
-          class = "p-3 rounded shadow-sm",
-          style = "background: linear-gradient(to right, #f8f9fa, #ffffff);",
-          
-          # Título principal
-          h4(
-            class = "mb-3 pb-2",
-            style = "border-bottom: 2px solid #0d6efd; color: #0d6efd;",
-            icon("info-circle"), 
-            "Data Selection"
-          ),
-          
-          fluidRow(
-            column(6,       # Sección de datos
-                   div(
-                     class = "mb-3 p-2 rounded",
-                     style = "background-color: rgba(13, 110, 253, 0.05); border-left: 4px solid #0d6efd;",
-                     
-                     h5(class = "text-primary", 
-                        icon("database", 
-                             style = "padding-left: 10px;", 
-                             class = "me-2"), "Data details"),
-                     
-                     div(class = "d-flex flex-wrap",
-                         div(class = "me-4 mb-2",
-                             tags$b(style = "padding-left: 10px;", "Source: "),
-                             span(data_source, style = "font-family: monospace;")),
-                         
-                         div(class = "me-4 mb-2",
-                             tags$b(style = "padding-left: 10px;", "File: "),
-                             span(original_file_name, style = "font-family: monospace;")),
-                         
-                         div(class = "me-4 mb-2",
-                             tags$b(style = "padding-left: 10px;", "Dimensions: "),
-                             span(paste0(value_nrow, " rows × ", value_ncol, " columns"), 
-                                  style = "font-family: monospace;"))
-                     )
-                   )
-                   
-                   
-                   
-            )
-            
-                     )
-                   )
-         
-      })
+    
+        output$info_zocalo_dataset <- renderUI({
+          fn_infoUI_zocalo_dataset(data_obj = output_list_database())
+        })
       
       
       # Devolver solo los datos confirmados

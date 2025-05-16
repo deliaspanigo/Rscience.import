@@ -139,8 +139,11 @@ module_import_Rdata_server <- function(id, sui_data_source) {
         
         # Mostrar un mensaje de éxito
         showNotification(
-          "Confirmed R dataset example!",
-          type = "message"
+          ui = "Confirmed R dataset example!",
+          duration = 3,
+          type = "message",
+          closeButton = TRUE,
+          id = "customNotif"
         )
       })
       

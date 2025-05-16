@@ -89,9 +89,9 @@ module_import_Rscience_server <- function(id, sui_data_source){
         
         # Determinar la clase del botón según su estado
         btn_class <- switch(button_state(),
-                            "initial" = "btn-primary",    # Azul inicial
+                            "initial"   = "btn-primary",    # Azul inicial
                             "confirmed" = "btn-success",  # Verde después de confirmar
-                            "modified" = "btn-primary")   # Vuelve a azul si se modifica
+                            "modified"  = "btn-primary")   # Vuelve a azul si se modifica
         
         # Determinar si el botón debe estar deshabilitado
         is_disabled <- is.null(input$selected_input_file) || input$selected_input_file == ""
