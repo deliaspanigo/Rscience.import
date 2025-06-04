@@ -43,7 +43,7 @@ module_import_Rdata_server <- function(id, sui_data_source) {
           inputId = ns("selected_input_file"),
           label = "R - Dataset examples",
           choices = vector_opt,
-          selected = vector_opt[2]
+          selected = vector_opt[1]   #################### Aca
         )
       })
       
