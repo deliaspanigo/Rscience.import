@@ -1,8 +1,8 @@
 
 
 devtools::load_all()
-devtools::build()     # Arma el paquete para mi
 devtools::document()  # Actualiza documentación
+devtools::build()     # Arma el paquete para mi
 devtools::test()      # Ejecuta pruebas
 devtools::check()     # Verifica el paquete
 # Instalar el paquete
