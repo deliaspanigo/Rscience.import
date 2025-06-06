@@ -61,7 +61,7 @@ module_import_03_show_server <- function(id, list_sui_settings) {
       str_import_external <- reactiveVal(NULL)
       str_import_internal <- reactiveVal(NULL)
                info_extra <- reactiveVal(NULL)
-                 database <- reactiveVal(NULL)
+                 my_dataset <- reactiveVal(NULL)
             error_message <- reactiveVal(NULL) # Para almacenar mensajes de error
       #button_clicked <- reactiveVal(FALSE)
 
@@ -90,7 +90,7 @@ module_import_03_show_server <- function(id, list_sui_settings) {
             
             str_import_internal(str_import_external())
             info_extra("No details")
-            database(eval(parse(text = str_import_internal())))
+            my_dataset(eval(parse(text = str_import_internal())))
             error_message("No details")
             
           }, error = function(e) {
@@ -120,7 +120,7 @@ module_import_03_show_server <- function(id, list_sui_settings) {
                    str_import_internal(str_import_external())
                    print(str_import_internal())
                    info_extra("No details")
-                   database(eval(parse(text = str_import_internal())))
+                   my_dataset(eval(parse(text = str_import_internal())))
                    error_message("No details")
               } else {
                 error_msg <- paste("El dataset", selected_input_file(), "no existe en data_list_Rscience.")
@@ -156,7 +156,7 @@ module_import_03_show_server <- function(id, list_sui_settings) {
             
             # Cargar los datos del archivo Excel con mejor manejo de errores
             withCallingHandlers({
-              database(eval(parse(text = str_import_internal())))
+              my_dataset(eval(parse(text = str_import_internal())))
 
               # Notificación de éxito
               showNotification(
@@ -187,7 +187,7 @@ module_import_03_show_server <- function(id, list_sui_settings) {
       
       # Construir la lista de salida
       output_list <- reactive({
-        # No requerir database() aquí para permitir devolver aunque haya error
+        # No requerir my_dataset() aquí para permitir devolver aunque haya error
         
         list(
           "data_source" = data_source(),
@@ -198,7 +198,7 @@ module_import_03_show_server <- function(id, list_sui_settings) {
           "str_import_external" = str_import_external(),
           "str_import_internal" = str_import_internal(),
           "info_extra" = info_extra(),
-          "database" = database(),
+          "my_dataset" = my_dataset(),
           "error_message" = error_message()
         )
       })

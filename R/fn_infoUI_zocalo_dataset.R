@@ -7,8 +7,8 @@ fn_infoUI_zocalo_dataset <- function(data_obj) {
   
   data_source <- list_safe$data_source
   original_file_name <- list_safe$original_file_name
-  value_ncol <- ncol(list_safe$database)
-  value_nrow <- nrow(list_safe$database)
+  value_ncol <- ncol(list_safe$"my_dataset")
+  value_nrow <- nrow(list_safe$"my_dataset")
   
   div(
     class = "p-3 rounded shadow-sm",

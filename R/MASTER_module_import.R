@@ -159,7 +159,7 @@ MASTER_module_import_server <- function(id, sui_data_source, show_dev = FALSE){
       # Mostrar las primeras filas de la tabla
       output$data_table <- renderTable({
         req(output_list_database())
-        df_safe <- tryCatch(output_list_database()$"database", error = function(e) NULL)
+        df_safe <- tryCatch(output_list_database()$"my_dataset", error = function(e) NULL)
         head(df_safe, 5)
       })
       
